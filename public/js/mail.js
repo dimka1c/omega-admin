@@ -9,7 +9,7 @@ $(document).ready(function(){
             data: {"id":id,"token":token},
             dataType: 'json',
             success: function(res) {
-                console.log(res);
+                console.log('закончили');
             },
             error: function(err) {
                 console.log(err);

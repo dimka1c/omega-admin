@@ -7,7 +7,7 @@ use vendor\core\Router;
 define('APP', dirname(__DIR__));
 define('LAYOUT', 'default');
 
-//require APP . '/vendor/autoload.php';
+require APP .'/vendor/autoload.php';
 
 spl_autoload_register(function ($class) {
     $file = APP . '/' . str_replace('\\', '/', $class) . '.php';
@@ -15,6 +15,8 @@ spl_autoload_register(function ($class) {
 });
 
 $query = rtrim($_SERVER['QUERY_STRING'], '/');
+
+Router::add('^(?P<controller>[a-z-]+)/?(?P<action>[a-z-]+)/?(?P<param>[a-z-0-9]+)?$');
 
 Router::add('^$', ['controller' => 'Main', 'action' => 'Index']);
 Router::add('^(?P<controller>[a-z-]+)/?(?P<action>[a-z-]+)?$');

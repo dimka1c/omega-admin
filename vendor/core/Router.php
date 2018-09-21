@@ -16,6 +16,8 @@ Class Router {
      */
     protected static $route = [];
 
+    protected static $param = [];
+
     /*
      * добавляет маршрут в таблицу маршрутов
      *
@@ -35,6 +37,11 @@ Class Router {
     public static function getRoute()
     {
         return self::$route;
+    }
+
+    public function getParam()
+    {
+        return self::$param;
     }
 
     /*

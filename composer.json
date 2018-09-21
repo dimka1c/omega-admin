@@ -1,0 +1,14 @@
+{
+    "name": "dimka1c/omega-ml.loc",
+    "type": "project",
+    "require": {
+        "phpoffice/phpexcel": "1.8.1"
+    },
+    "authors": [
+        {
+            "name": "dimka1c",
+            "email": "dima@udt.dp.ua"
+        }
+    ],
+    "minimum-stability": "alpha"
+}

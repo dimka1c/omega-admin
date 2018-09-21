@@ -24,7 +24,9 @@
         <nav class="navbar navbar-light bg-faded" style="background-color: #e3f2fd;">
             <a class="navbar-brand" href="#">Панель Администратора</a>
             <div><?= $user ?></div>
+            <a href="/admin/logout">Выход</a>
         </nav>
+
     </div>
 
     <?= $content ?>

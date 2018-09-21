@@ -26,6 +26,11 @@ class MainController extends AppController
         $model = new MainModel();
         $drivers = $model->getAllDrivers();
         */
+        //var_dump($_COOKIE);
+        $model = new UserModel();
+        if ($model->UserAccessCoockie()) {
+            header("Location: /admin/index");
+        }
         $drivers = ['one', 'two'];
         $this->setDataView(compact('drivers'));
 
@@ -38,7 +43,7 @@ class MainController extends AppController
             header("Location: /admin/index");
         } else {
             $this->setFlash('error-login', 'Неверный логин или пароль');
-            header("Location: /main");
+            header("Location: /main/index");
         }
     }
 

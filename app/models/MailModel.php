@@ -4,7 +4,7 @@ namespace app\models;
 
 use vendor\core\AppModel;
 
-class MailModel extends AppModel
+class MailModel
 {
 
     public $mails = [];
@@ -16,6 +16,11 @@ class MailModel extends AppModel
     public function __construct()
     {
         $this->mailCONST = require APP . '/app/config/email.config.php';
+    }
+
+    public function getUploadFiles()
+    {
+        return $this->uploadFiles;
     }
 
     /*
@@ -139,7 +144,7 @@ class MailModel extends AppModel
                 unlink($file);
             }
         }
-	return true;
+	    return true;
     }
 
 
@@ -153,7 +158,6 @@ class MailModel extends AppModel
         $inbox = imap_open($this->mailCONST['host'], $this->mailCONST['username'], $this->mailCONST['password']) or die('Cannot connect to mailbox: ' . imap_last_error());
         $structure = imap_fetchstructure($inbox, $uid, FT_UID);
         $part_array = $this->create_part_array($structure);
-        //$header = imap_fetchbody($inbox, $uid, '0', FT_UID);
 
         foreach ($part_array as $key => $attach) {
             if (($attach['part_object']->type == 3) &&

@@ -41,9 +41,13 @@ class AppDB
 
     public function execute($sql)
     {
-        self::$queryes[] = $sql;
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute();
+        try {
+            self::$queryes[] = $sql;
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            return $e;
+        }
     }
 
     public function query($sql)

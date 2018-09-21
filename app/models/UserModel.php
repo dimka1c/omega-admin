@@ -54,6 +54,15 @@ class UserModel extends AppModel implements UserInterface
                             $_SESSION['user'][$key] = $data;
                         }
                     }
+                    if (isset($_POST['login-remember'])) {
+                        $coockie = str_replace(['/', '+', '='], '', base64_encode(random_bytes(32)));
+                        // ставиим куку на 7 дней
+                        $setCoockie = setcookie('omega_access', $coockie, time()+3600*24*7, '/', 'omega.loc');
+                        if ($setCoockie) {
+                            $sql_cook = "UPDATE users SET user_coockie = '{$coockie}'  WHERE id = {$res[0]['id']}";
+                            $this->query("UPDATE users SET user_coockie = '{$coockie}'  WHERE id = {$res[0]['id']}");
+                        }
+                    }
                     return true;
                 }
             }
@@ -63,7 +72,9 @@ class UserModel extends AppModel implements UserInterface
 
     public function logout(): bool
     {
-        // TODO: Implement logout() method.
+        setcookie('omega_access', '', time()-100, '/', 'omega.loc' );
+        unset($_SESSION['user']);
+        return true;
     }
 
     public function UserAccessAPI(): bool
@@ -73,7 +84,18 @@ class UserModel extends AppModel implements UserInterface
 
     public function UserAccessCoockie(): bool
     {
-        // TODO: Implement UserAccessCoockie() method.
+        if (isset($_COOKIE['omega_access'])) {
+            $res = $this->findAll("SELECT * FROM users WHERE user_coockie = '{$_COOKIE['omega_access']}'");
+            if (is_array($res)) {
+                foreach ($res[0] as $key => $data) {
+                    if ($key != 'password') {
+                        $_SESSION['user'][$key] = $data;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public function getNameUser(): string
